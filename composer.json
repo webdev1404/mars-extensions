@@ -1,0 +1,23 @@
+{
+    "name": "webdev1404/mars-extensions",
+    "type": "extensions",
+    "description": "Mars Framework Extensions",
+    "require": {
+        "php": ">=8.4",
+        "webdev1404/mars-framework": "dev-master"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Adrian Razvan Chis",
+            "email": "sargon1404@gmail.com"
+        },
+        {
+            "name": "Adrian Razvan Chis",
+            "email": "sargon1404@webdev1404.com"
+        }
+    ],
+    "autoload": {
+        "classmap": ["languages/", "modules/", "themes/"]
+    }
+}
