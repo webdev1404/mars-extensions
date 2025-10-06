@@ -1,7 +1,7 @@
 <?php
 namespace Modules\ContactUs\Blocks\Form\Views;
 
-use Mars\MVC\View;
+use Mars\Mvc\View;
 
 class Form extends View
 {

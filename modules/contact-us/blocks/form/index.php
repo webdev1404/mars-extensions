@@ -1,6 +1,6 @@
 <?php
-if(!defined('MARS')) {
-	die;
+if (!defined('MARS')) {
+    die;
 }
 
 $this->loadLanguage();

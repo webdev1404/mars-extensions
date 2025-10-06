@@ -1,33 +1,31 @@
-@global ('title', 'contact_us')
-
 <div id="contact-us">
 	<article>
 		<form action="{{ $app.url }}" method="post">
 			<input type="hidden" name="action" value="send" />
 
-			<table>
-				<tr>
-					<td><label for="email">{{ email }}</label></td>
-					<td><input type="email" id="email" name="email" value="{{ $model.email }}" /></td>
-				</tr>
-				<tr>
-					<td><label for="from">{{ from }}</label></td>
-					<td><input type="text" id="from" name="from" value="{{ $model.from }}" /></td>
-				</tr>
-				<tr>
-					<td><label for="subject">{{ subject }}</label></td>
-					<td><input type="text" id="subject" name="subject" value="{{ $model.subject }}" /></td>
-				</tr>
-				<tr>
-					<td><label for="message">{{ message }}</label></td>
-					<td><textarea name="message" id="message">{{ $model.message }}</textarea>
-				</tr>
-				<tr>
-					<td colspan="2"><input type="submit" value="{{ send }}" /></td>
-				</tr>
+			<div class="form-fields">
+				<div class="form-field">
+					<label for="email">{{ email }}</label>
+					<input type="email" id="email" name="email" value="{{ $model.email }}" required />
+				</div>
+				<div class="form-field">
+					<label for="from">{{ from }}</label>
+					<input type="text" id="from" name="from" value="{{ $model.from }}" required />
+				</div>
+				<div class="form-field">
+					<label for="subject">{{ subject }}</label>
+					<input type="text" id="subject" name="subject" value="{{ $model.subject }}" required />
+				</div>
+				<div class="form-field">
+					<label for="message">{{ message }}</label>
+					<textarea name="message" id="message" required>{{ $model.message }}</textarea>
+				</div>
+				<div class="form-field">
+					<input type="submit" value="{{ send }}" />
+				</div>
 
 				{! $app.captcha.output() !}
-			</table>
+			</div>
 
 		</form>
 	</article>

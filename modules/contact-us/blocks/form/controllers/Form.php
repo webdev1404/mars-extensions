@@ -2,7 +2,7 @@
 
 namespace Modules\ContactUs\Blocks\Form\Controllers;
 
-use \Mars\MVC\Controller;
+use Mars\Mvc\Controller;
 
 class Form extends Controller
 {
@@ -14,7 +14,7 @@ class Form extends Controller
         $this->plugins->run('contact_us_form', $this->model);
 
         $this->view->render();
-    }   
+    }
 
     /**
      * Sends the contact form
@@ -34,7 +34,7 @@ class Form extends Controller
 
         $this->messages->add($this->__('success'));
 
-        $this->plugins->run('contact_us_send', $this->model);
+        $this->plugins->run('contact_us_send_success', $this->model);
 
         $this->model->reset();
 

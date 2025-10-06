@@ -2,7 +2,7 @@
 namespace Modules\ContactUs\Blocks\Form\Models;
 
 use Mars\App;
-use Mars\MVC\Models\Entity;
+use Mars\Mvc\Models\Entity;
 
 class Form extends Entity
 {
@@ -20,34 +20,44 @@ class Form extends Entity
         'from' => 'req',
         'subject' => 'req',
         'message' => 'req',
+        'captcha' => 'captcha'
     ];
 
+    /**
+     * Sends the contact us message to the configured emails
+     */
     public function send()
     {
-        var_dump($this->parent->params);die;
         if (!$this->validate()) {
             return false;
         }
-        
-        //if (!isset($this->config->))
 
-        /*$emails = [];
-        if($venus->config->contact_emails)
-        {
-            $emails = explode(',', $venus->config->contact_emails);
-            $emails = $venus->filter->trim($emails);
+        $emails = $this->getEmails();
+        if (!$emails) {
+            throw new \Exception('No contact emails configured. Please set the contact emails in the config or in the block settings.');
         }
+
+        $subject = $this->app->lang->get('title', ['{SITE_NAME}' => $this->app->config->site_name]);
+        $template = $this->parent->path . '/templates/mail.php';
         
+        $this->plugins->run('contact_us_model_send', $emails, $subject, $template, $this);
 
-        $subject = l('contact_us_str6') . $message_data['subject'];
-        $message = 	$venus->text->parse($message_data['message']);
-
-        $venus->plugins->run('contact_us_model_send', $subject, $message, $emails, $message_data);
-
-        $venus->mail($emails, $subject, $message, $message_data['email'], $message_data['from']);
-        */
+        $this->app->mail->sendTemplate($emails, $subject, $template, ['sender' => $this], ['from' => $this->email, 'from_name' => $this->from]);
 
         return true;
     }
 
+    /**
+     * Returns the emails where the contact us messages will be sent
+     * @return array The emails
+     */
+    protected function getEmails(): array
+    {
+        $emails = $this->parent->params['emails'] ?? [];
+        if (!$emails) {
+            $emails = $this->config->contact_emails ?? [];
+        }
+
+        return $this->app->array->get($emails);
     }
+}
