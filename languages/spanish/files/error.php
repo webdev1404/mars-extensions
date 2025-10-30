@@ -25,6 +25,9 @@ return [
     'upload_tmp' => 'Error de subida. Error al escribir el archivo subido en el directorio temporal',
     'upload_invalid_type' => 'Error de subida. Tipo de archivo inválido para el archivo: {FILE}. No está permitido subir archivos con esta extensión',
 
+    'request_not_post' => 'Solicitud inválida. El método de solicitud debe ser POST.',
+    'request_invalid_csrf' => 'Solicitud inválida. El token CSRF no es válido o ha expirado. Por favor, inténtelo de nuevo.',
+
     'validate_required' => "El campo '{FIELD}' es obligatorio.",
     'validate_required_min' => "El campo '{FIELD}' es obligatorio y debe tener al menos {MIN} caracteres.",
     'validate_required_max' => "El campo '{FIELD}' es obligatorio y debe tener como máximo {MAX} caracteres.",
@@ -47,4 +50,9 @@ return [
     'validate_pattern' => "El campo '{FIELD}' no coincide con el patrón requerido",
     'validate_unique' => "El campo '{FIELD}' debe ser único. El valor ya existe.",
     'validate_captcha' => "El captcha no es válido. Por favor, inténtelo de nuevo.",
+    'validate_username' => "El campo '{FIELD}' debe ser un nombre de usuario válido.",
+    'validate_username_length' => "El campo '{FIELD}' debe ser un nombre de usuario válido. Debe tener entre {MIN} y {MAX} caracteres.",
+    'validate_username_chars' => "El campo '{FIELD}' debe ser un nombre de usuario válido. Solo puede contener letras, números, puntos (.), guiones bajos (_) y guiones (-).",
+    'validate_password' => "El campo '{FIELD}' debe ser una contraseña válida.",
+    'validate_password_length' => "El campo '{FIELD}' debe ser una contraseña válida. Debe tener entre {MIN} y {MAX} caracteres.",
 ];

@@ -25,6 +25,9 @@ return [
     'upload_tmp' => "Erreur de téléchargement. Erreur lors de l'écriture du fichier téléchargé dans le dossier temporaire",
     'upload_invalid_type' => "Erreur de téléchargement. Type de fichier invalide pour le fichier : {FILE}. Vous n'êtes pas autorisé à télécharger des fichiers avec cette extension",
 
+    'request_not_post' => 'Requête invalide. La méthode de requête doit être POST.',
+    'request_invalid_csrf' => 'Requête invalide. Le token CSRF est invalide ou a expiré. Veuillez réessayer.',
+
     'validate_required' => "Le champ '{FIELD}' est requis.",
     'validate_required_min' => "Le champ '{FIELD}' est requis et doit comporter au moins {MIN} caractères.",
     'validate_required_max' => "Le champ '{FIELD}' est requis et doit comporter au maximum {MAX} caractères.",
@@ -47,4 +50,9 @@ return [
     'validate_pattern' => "Le champ '{FIELD}' ne correspond pas au format requis",
     'validate_unique' => "Le champ '{FIELD}' doit être unique. La valeur existe déjà.",
     'validate_captcha' => "Le captcha est invalide. Veuillez réessayer.",
+    'validate_username' => "Le champ '{FIELD}' doit être un nom d'utilisateur valide.",
+    'validate_username_length' => "Le champ '{FIELD}' doit être un nom d'utilisateur valide. Il doit comporter entre {MIN} et {MAX} caractères.",
+    'validate_username_chars' => "Le champ '{FIELD}' doit être un nom d'utilisateur valide. Il ne peut contenir que des lettres, des chiffres, des points (.), des underscores (_) et des traits d'union (-).",
+    'validate_password' => "Le champ '{FIELD}' doit être un mot de passe valide.",
+    'validate_password_length' => "Le champ '{FIELD}' doit être un mot de passe valide. Il doit comporter entre {MIN} et {MAX} caractères.",
 ];

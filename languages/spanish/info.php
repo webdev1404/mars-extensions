@@ -1,6 +1,7 @@
 <?php
 
 return [
-    'title' => 'German',
-    'description' => 'The german language for Mars',
+    'title' => 'Spanish',
+    'description' => 'The spanish language for Mars',
+    'code' => 'es'
 ];

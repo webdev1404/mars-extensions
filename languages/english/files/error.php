@@ -25,6 +25,9 @@ return [
     'upload_tmp' => 'Upload error. Error writing the uploaded file to the tmp dir',
     'upload_invalid_type' => 'Upload error. Invalid file type for file: {FILE}. You are not allowed to upload files with this extension',
 
+    'request_not_post' => 'Invalid request. The request method must be POST.',
+    'request_invalid_csrf' => 'Invalid request. The CSRF token is invalid or has expired. Please try again.',
+
     'validate_required' => "Field '{FIELD}' is required.",
     'validate_required_min' => "Field '{FIELD}' is required and must have a minimum of {MIN} characters.",
     'validate_required_max' => "Field '{FIELD}' is required and must have a maximum of {MAX} characters.",
@@ -47,4 +50,9 @@ return [
     'validate_pattern' => "Field '{FIELD}' doesn't match the required pattern",
     'validate_unique' => "Field '{FIELD}' must be unique. The value already exists.",
     'validate_captcha' => "The captcha is invalid. Please try again.",
+    'validate_username' => "Field '{FIELD}' must be a valid username.",
+    'validate_username_length' => "Field '{FIELD}' must be a valid username. It must be between {MIN} and {MAX} characters long.",
+    'validate_username_chars' => "Field '{FIELD}' must be a valid username. It can only contain letters, numbers, dots (.), underscores (_) and hyphens (-).",
+    'validate_password' => "Field '{FIELD}' must be a valid password.",
+    'validate_password_length' => "Field '{FIELD}' must be a valid password. It must be between {MIN} and {MAX} characters long.",
 ];

@@ -25,6 +25,9 @@ return [
     'upload_tmp' => 'Upload-Fehler. Fehler beim Schreiben der hochgeladenen Datei in das temporäre Verzeichnis',
     'upload_invalid_type' => 'Upload-Fehler. Ungültiger Dateityp für Datei: {FILE}. Sie dürfen keine Dateien mit dieser Erweiterung hochladen',
 
+    'request_not_post' => 'Ungültige Anfrage. Die Anfrage-Methode muss POST sein.',
+    'request_invalid_csrf' => 'Ungültige Anfrage. Das CSRF-Token ist ungültig oder abgelaufen. Bitte versuchen Sie es erneut.',
+
     'validate_required' => "Feld '{FIELD}' ist erforderlich.",
     'validate_required_min' => "Feld '{FIELD}' ist erforderlich und muss mindestens {MIN} Zeichen enthalten.",
     'validate_required_max' => "Feld '{FIELD}' ist erforderlich und darf maximal {MAX} Zeichen enthalten.",
@@ -47,4 +50,9 @@ return [
     'validate_pattern' => "Feld '{FIELD}' entspricht nicht dem erforderlichen Muster",
     'validate_unique' => "Feld '{FIELD}' muss eindeutig sein. Der Wert existiert bereits.",
     'validate_captcha' => "Das Captcha ist ungültig. Bitte versuchen Sie es erneut.",
+    'validate_username' => "Feld '{FIELD}' muss ein gültiger Benutzername sein.",
+    'validate_username_length' => "Feld '{FIELD}' muss ein gültiger Benutzername sein. Er muss zwischen {MIN} und {MAX} Zeichen lang sein.",
+    'validate_username_chars' => "Feld '{FIELD}' muss ein gültiger Benutzername sein. Er darf nur Buchstaben, Zahlen, Punkte (.), Unterstriche (_) und Bindestriche (-) enthalten.",
+    'validate_password' => "Feld '{FIELD}' muss ein gültiges Passwort sein.",
+    'validate_password_length' => "Feld '{FIELD}' muss ein gültiges Passwort sein. Es muss zwischen {MIN} und {MAX} Zeichen lang sein.",
 ];

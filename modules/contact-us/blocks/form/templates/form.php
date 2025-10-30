@@ -1,6 +1,7 @@
-<div id="contact-us">
+<div id="contact-us-form">
 	<article>
 		<form action="{{ $app.url }}" method="post">
+			@csrf
 			<input type="hidden" name="action" value="send" />
 
 			<div class="form-fields">
