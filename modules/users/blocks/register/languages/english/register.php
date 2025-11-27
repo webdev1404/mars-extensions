@@ -10,6 +10,8 @@ return [
 
     'success' => "You have successfully registered. Please check your email for instructions to activate your account.",
 
+    'activation_success' => "Your account has been successfully activated. You can now log in.",
+
     'err_username' => "Please enter your username",
     'err_username_invalid' => "The username you entered is not valid. It should be between 5 and 100 characters long and can only contain letters, numbers, underscores, and dots.",
     'err_username_exists' => "The username you entered is already taken. Please choose a different one.",
@@ -19,4 +21,5 @@ return [
     'err_password' => "Please enter your password",
     'err_password_invalid' => "The password you entered is not valid. It should be between 6 and 100 characters long and include a mix of letters, numbers, and special characters.",
     'err_password_mismatch' => "The passwords you entered do not match",
+    'err_activation_params' => "Invalid activation parameters",
 ];

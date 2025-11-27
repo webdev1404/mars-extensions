@@ -1,9 +1,6 @@
 <?php
-if (!defined('MARS')) {
-    die;
-}
 
+$this->loadConfig();
 $this->loadLanguage();
 
-$controller = $this->getController();
-$controller->dispatch();
+$this->execute();

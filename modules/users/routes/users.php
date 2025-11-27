@@ -2,4 +2,12 @@
 
 //$router->block('/login', 'users', 'form');
 
-$router->block('/register', 'users', 'register');
+$this->block([
+    '*' => '/register',
+    'fr' => '/inscription',
+    'de' => '/registrierung',
+    'it' => '/registrazione',
+    'es' => '/registro',
+], 'users', 'register', name: 'register');
+
+//$this->block('/activate/{id}/{code}', 'users', 'register', ['action' => 'activate']);

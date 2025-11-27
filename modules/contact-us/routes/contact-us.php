@@ -1,3 +1,3 @@
 <?php
 
-$router->block('/contact-us', 'contact-us', 'form');
+//$this->block('/contact-us', 'contact-us', 'form');

@@ -1,9 +1,8 @@
 {
     "name": "webdev1404/mars-extensions",
-    "type": "extensions",
+    "type": "mars-framework-extensions",
     "description": "Mars Framework Extensions",
     "require": {
-        "php": ">=8.4",
         "webdev1404/mars-framework": "dev-master"
     },
     "license": "MIT",
