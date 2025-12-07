@@ -1,0 +1,31 @@
+<?php
+
+return [
+    'required' => "Feld '{FIELD}' ist erforderlich.",
+    'required.min' => "Feld '{FIELD}' ist erforderlich und muss mindestens {MIN} Zeichen haben.",
+    'required.max' => "Feld '{FIELD}' ist erforderlich und darf maximal {MAX} Zeichen haben.",
+    'text.min' => "Feld '{FIELD}' muss mindestens {MIN} Zeichen haben.",
+    'text.max' => "Feld '{FIELD}' darf maximal {MAX} Zeichen haben.",
+    'int' => "Feld '{FIELD}' muss eine gültige Zahl sein.",
+    'int.min' => "Feld '{FIELD}' muss eine gültige Zahl sein, die mindestens {MIN} beträgt.",
+    'int.max' => "Feld '{FIELD}' muss eine gültige Zahl sein, die maximal {MAX} beträgt.",
+    'int.min.max' => "Feld '{FIELD}' muss eine gültige Zahl zwischen {MIN} und {MAX} sein.",
+    'float' => "Feld '{FIELD}' muss eine gültige Zahl sein.",
+    'float.min' => "Feld '{FIELD}' muss eine gültige Zahl sein, die mindestens {MIN} beträgt.",
+    'float.max' => "Feld '{FIELD}' muss eine gültige Zahl sein, die maximal {MAX} beträgt.",
+    'float.min.max' => "Feld '{FIELD}' muss eine gültige Zahl zwischen {MIN} und {MAX} sein.",
+    'datetime' => "Feld '{FIELD}' muss ein gültiges Datum und eine gültige Uhrzeit im Format {FORMAT} sein.",
+    'date' => "Feld '{FIELD}' muss ein gültiges Datum im Format {FORMAT} sein.",
+    'time' => "Feld '{FIELD}' muss eine gültige Uhrzeit im Format {FORMAT} sein.",
+    'email' => "Feld '{FIELD}' muss eine gültige E-Mail-Adresse sein.",
+    'url' => "Feld '{FIELD}' muss eine gültige URL sein.",
+    'ip' => "Feld '{FIELD}' muss eine gültige IP-Adresse sein.",
+    'pattern' => "Feld '{FIELD}' entspricht nicht dem erforderlichen Muster.",
+    'unique' => "Feld '{FIELD}' muss eindeutig sein. Der Wert existiert bereits.",
+    'captcha' => "Das Captcha ist ungültig. Bitte versuchen Sie es erneut.",
+    'username' => "Feld '{FIELD}' muss ein gültiger Benutzername sein.",
+    'username.length' => "Feld '{FIELD}' muss ein gültiger Benutzername sein. Es muss zwischen {MIN} und {MAX} Zeichen lang sein.",
+    'username.chars' => "Feld '{FIELD}' muss ein gültiger Benutzername sein. Es darf nur Buchstaben, Zahlen, Punkte (.), Unterstriche (_) und Bindestriche (-) enthalten.",
+    'password' => "Feld '{FIELD}' muss ein gültiges Passwort sein.",
+    'password.length' => "Feld '{FIELD}' muss ein gültiges Passwort sein. Es muss zwischen {MIN} und {MAX} Zeichen lang sein."
+];

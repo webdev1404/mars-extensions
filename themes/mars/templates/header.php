@@ -6,7 +6,7 @@
 
 <body>
     <header>
-        <span class="logo">{{ $config.site_name }}</span>
+        <span class="logo">{{ $config.site.name }}</span>
         @template ('menu')
     </header>
 

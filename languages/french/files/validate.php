@@ -1,0 +1,31 @@
+<?php
+
+return [
+    'required' => "Le champ '{FIELD}' est requis.",
+    'required.min' => "Le champ '{FIELD}' est requis et doit contenir au moins {MIN} caractères.",
+    'required.max' => "Le champ '{FIELD}' est requis et doit contenir au maximum {MAX} caractères.",
+    'text.min' => "Le champ '{FIELD}' doit contenir au moins {MIN} caractères.",
+    'text.max' => "Le champ '{FIELD}' doit contenir au maximum {MAX} caractères.",
+    'int' => "Le champ '{FIELD}' doit être un nombre valide.",
+    'int.min' => "Le champ '{FIELD}' doit être un nombre valide supérieur ou égal à {MIN}.",
+    'int.max' => "Le champ '{FIELD}' doit être un nombre valide inférieur ou égal à {MAX}.",
+    'int.min.max' => "Le champ '{FIELD}' doit être un nombre valide compris entre {MIN} et {MAX}.",
+    'float' => "Le champ '{FIELD}' doit être un nombre valide.",
+    'float.min' => "Le champ '{FIELD}' doit être un nombre valide supérieur ou égal à {MIN}.",
+    'float.max' => "Le champ '{FIELD}' doit être un nombre valide inférieur ou égal à {MAX}.",
+    'float.min.max' => "Le champ '{FIELD}' doit être un nombre valide compris entre {MIN} et {MAX}.",
+    'datetime' => "Le champ '{FIELD}' doit être une date et une heure valides au format {FORMAT}.",
+    'date' => "Le champ '{FIELD}' doit être une date valide au format {FORMAT}.",
+    'time' => "Le champ '{FIELD}' doit être une heure valide au format {FORMAT}.",
+    'email' => "Le champ '{FIELD}' doit être une adresse email valide.",
+    'url' => "Le champ '{FIELD}' doit être une URL valide.",
+    'ip' => "Le champ '{FIELD}' doit être une adresse IP valide.",
+    'pattern' => "Le champ '{FIELD}' ne correspond pas au modèle requis.",
+    'unique' => "Le champ '{FIELD}' doit être unique. La valeur existe déjà.",
+    'captcha' => "Le captcha est invalide. Veuillez réessayer.",
+    'username' => "Le champ '{FIELD}' doit être un nom d'utilisateur valide.",
+    'username.length' => "Le champ '{FIELD}' doit être un nom d'utilisateur valide. Il doit contenir entre {MIN} et {MAX} caractères.",
+    'username.chars' => "Le champ '{FIELD}' doit être un nom d'utilisateur valide. Il ne peut contenir que des lettres, des chiffres, des points (.), des tirets bas (_) et des tirets (-).",
+    'password' => "Le champ '{FIELD}' doit être un mot de passe valide.",
+    'password.length' => "Le champ '{FIELD}' doit être un mot de passe valide. Il doit contenir entre {MIN} et {MAX} caractères."
+];

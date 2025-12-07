@@ -1,0 +1,31 @@
+<?php
+
+return [
+    'required' => "Il campo '{FIELD}' è obbligatorio.",
+    'required.min' => "Il campo '{FIELD}' è obbligatorio e deve avere un minimo di {MIN} caratteri.",
+    'required.max' => "Il campo '{FIELD}' è obbligatorio e deve avere un massimo di {MAX} caratteri.",
+    'text.min' => "Il campo '{FIELD}' deve avere un minimo di {MIN} caratteri.",
+    'text.max' => "Il campo '{FIELD}' deve avere un massimo di {MAX} caratteri.",
+    'int' => "Il campo '{FIELD}' deve essere un numero valido.",
+    'int.min' => "Il campo '{FIELD}' deve essere un numero valido maggiore o uguale a {MIN}.",
+    'int.max' => "Il campo '{FIELD}' deve essere un numero valido minore o uguale a {MAX}.",
+    'int.min.max' => "Il campo '{FIELD}' deve essere un numero valido compreso tra {MIN} e {MAX}.",
+    'float' => "Il campo '{FIELD}' deve essere un numero valido.",
+    'float.min' => "Il campo '{FIELD}' deve essere un numero valido maggiore o uguale a {MIN}.",
+    'float.max' => "Il campo '{FIELD}' deve essere un numero valido minore o uguale a {MAX}.",
+    'float.min.max' => "Il campo '{FIELD}' deve essere un numero valido compreso tra {MIN} e {MAX}.",
+    'datetime' => "Il campo '{FIELD}' deve essere una data e ora valida nel formato {FORMAT}.",
+    'date' => "Il campo '{FIELD}' deve essere una data valida nel formato {FORMAT}.",
+    'time' => "Il campo '{FIELD}' deve essere un orario valido nel formato {FORMAT}.",
+    'email' => "Il campo '{FIELD}' deve essere un indirizzo email valido.",
+    'url' => "Il campo '{FIELD}' deve essere un URL valido.",
+    'ip' => "Il campo '{FIELD}' deve essere un indirizzo IP valido.",
+    'pattern' => "Il campo '{FIELD}' non corrisponde al modello richiesto.",
+    'unique' => "Il campo '{FIELD}' deve essere univoco. Il valore esiste già.",
+    'captcha' => "Il captcha non è valido. Per favore riprova.",
+    'username' => "Il campo '{FIELD}' deve essere un nome utente valido.",
+    'username.length' => "Il campo '{FIELD}' deve essere un nome utente valido. Deve essere lungo tra {MIN} e {MAX} caratteri.",
+    'username.chars' => "Il campo '{FIELD}' deve essere un nome utente valido. Può contenere solo lettere, numeri, punti (.), underscore (_) e trattini (-).",
+    'password' => "Il campo '{FIELD}' deve essere una password valida.",
+    'password.length' => "Il campo '{FIELD}' deve essere una password valida. Deve essere lunga tra {MIN} e {MAX} caratteri."
+];

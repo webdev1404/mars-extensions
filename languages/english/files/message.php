@@ -3,6 +3,6 @@
 return [
     'message' => 'Message',
     'error' => 'Error',
-    'permission_denied_title' => 'Permission Denied',
-    'permission_denied_text' => 'You do not have permission to access this page.',
+    'permission_denied.title' => 'Permission Denied',
+    'permission_denied.text' => 'You do not have permission to access this page.',
 ];

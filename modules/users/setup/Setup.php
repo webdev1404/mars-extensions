@@ -2,12 +2,10 @@
 
 namespace Modules\Users\Setup;
 
-use Mars\App\Kernel;
+use Mars\Extensions\Setup\Module;
 
-class Setup
+class Setup extends Module
 {
-    use Kernel;
-
     public function install()
     {
         $sql = "
@@ -28,7 +26,7 @@ class Setup
             INDEX username_idx (`username_crc32`),
             INDEX email_idx (`email_crc32`)
         )";
-        
+
         $this->app->db->query($sql);
     }
 
