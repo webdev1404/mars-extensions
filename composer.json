@@ -17,6 +17,6 @@
         }
     ],
     "autoload": {
-        "classmap": ["languages/", "modules/", "themes/"]
+        "classmap": ["languages/src", "modules/src", "themes/src"]
     }
 }

@@ -1,7 +1,7 @@
 <div id="warnings-container">
     <ul>
     @foreach ($warnings as $warning)
-        <li>{{ $warning }}</li>
+        <li>{! $warning['text'] | nl2br !}</li>
     @endforeach
     </ul>
 </div>

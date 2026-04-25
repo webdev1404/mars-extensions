@@ -25,5 +25,7 @@ return [
     'upload.invalid_type' => 'Upload error. Invalid file type for file: {FILE}. You are not allowed to upload files with this extension',
 
     'request.not_post' => 'Invalid request. The request method must be POST.',
-    'request.invalid_csrf' => 'Invalid request. The CSRF token is invalid or has expired. Please try again.'
+    'request.invalid_csrf' => 'Invalid request. The CSRF token is invalid or has expired. Please try again.',
+    'request.invalid_captcha' => 'Invalid request. The captcha is incorrect. Please try again.',
+    'request.throttled' => 'Too many requests. Please wait a while before trying again.',
 ];

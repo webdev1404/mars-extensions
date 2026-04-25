@@ -1,6 +1,8 @@
 <?php
 
 return [
-    'menu.homepage' => 'Homepage',
-    'menu.register' => 'Register',
+    'menu.homepage' => 'Startseite',
+    'menu.register' => 'Registrieren',
+    'menu.login' => 'Anmelden',
+    'menu.contact' => 'Kontakt',
 ];

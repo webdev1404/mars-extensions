@@ -22,7 +22,6 @@ return [
     'ip' => "Il campo '{FIELD}' deve essere un indirizzo IP valido.",
     'pattern' => "Il campo '{FIELD}' non corrisponde al modello richiesto.",
     'unique' => "Il campo '{FIELD}' deve essere univoco. Il valore esiste già.",
-    'captcha' => "Il captcha non è valido. Per favore riprova.",
     'username' => "Il campo '{FIELD}' deve essere un nome utente valido.",
     'username.length' => "Il campo '{FIELD}' deve essere un nome utente valido. Deve essere lungo tra {MIN} e {MAX} caratteri.",
     'username.chars' => "Il campo '{FIELD}' deve essere un nome utente valido. Può contenere solo lettere, numeri, punti (.), underscore (_) e trattini (-).",

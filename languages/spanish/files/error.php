@@ -25,5 +25,7 @@ return [
     'upload.invalid_type' => 'Error de subida. Tipo de archivo inválido para el archivo: {FILE}. No está permitido subir archivos con esta extensión.',
 
     'request.not_post' => 'Solicitud inválida. El método de la solicitud debe ser POST.',
-    'request.invalid_csrf' => 'Solicitud inválida. El token CSRF es inválido o ha expirado. Por favor, inténtelo de nuevo.'
+    'request.invalid_csrf' => 'Solicitud inválida. El token CSRF es inválido o ha expirado. Por favor, inténtelo de nuevo.',
+    'request.invalid_captcha' => 'Solicitud inválida. El captcha es incorrecto. Por favor, inténtelo de nuevo.',
+    'request.throttled' => 'Demasiadas solicitudes. Por favor, espere un momento antes de intentarlo de nuevo.',
 ];

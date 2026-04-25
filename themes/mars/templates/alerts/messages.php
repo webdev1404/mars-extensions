@@ -1,5 +1,5 @@
 <div id="messages-container">	
     @foreach ($messages as $message)
-        {{ $message }}<br />
+        {! $message['text'] | nl2br !}<br />
     @endforeach
 </div>

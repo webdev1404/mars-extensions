@@ -25,5 +25,7 @@ return [
     'upload.invalid_type' => 'Erreur de téléchargement. Type de fichier invalide pour le fichier : {FILE}. Vous n\'êtes pas autorisé à télécharger des fichiers avec cette extension',
 
     'request.not_post' => 'Requête invalide. La méthode de requête doit être POST.',
-    'request.invalid_csrf' => 'Requête invalide. Le jeton CSRF est invalide ou a expiré. Veuillez réessayer.'
+    'request.invalid_csrf' => 'Requête invalide. Le jeton CSRF est invalide ou a expiré. Veuillez réessayer.',
+    'request.invalid_captcha' => 'Requête invalide. Le captcha est incorrect. Veuillez réessayer.',
+    'request.throttled' => 'Trop de requêtes. Veuillez attendre un moment avant de réessayer.',
 ];

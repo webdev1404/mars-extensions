@@ -11,7 +11,7 @@ class Form extends Controller
      */
     public function form()
     {
-        $this->plugins->run('contact_us_form', $this->model);
+        $this->plugins->run('contact_us.form', $this->model);
 
         $this->view->render();
     }
@@ -30,14 +30,14 @@ class Form extends Controller
         }
 
         if (!$this->model->validate()) {
-            $this->plugins->run('contact_us_send_error', $this->model);
+            $this->plugins->run('contact_us.send.error', $this->model);
 
             return false;
         }
 
         $this->sendEmail();
 
-        $this->plugins->run('contact_us_send_success', $this->model);
+        $this->plugins->run('contact_us.send.success', $this->model);
 
         $this->messages->add($this->__('success'));
 
@@ -59,7 +59,7 @@ class Form extends Controller
         $subject = $this->__('title', ['{SITE_NAME}' => $this->app->config->site_name]);
         $template = $this->parent->path . '/templates/mail.php';
 
-        $this->plugins->run('contact_us_send_email', $emails, $subject, $template, $this);
+        $this->plugins->run('contact_us.send.email', $emails, $subject, $template, $this);
 
         $this->app->mail->sendTemplate($emails, $subject, $template, ['sender' => $this->model], ['from' => $this->model->email, 'from_name' => $this->model->from]);
 
@@ -77,6 +77,6 @@ class Form extends Controller
             $emails = $this->config->contact_emails ?? ($this->config->site_emails ?? []);
         }
 
-        return $this->app->array->get($emails);
+        return (array)$emails;
     }
 }

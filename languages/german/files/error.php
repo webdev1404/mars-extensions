@@ -25,5 +25,7 @@ return [
     'upload.invalid_type' => 'Fehler beim Hochladen. Ungültiger Dateityp für die Datei: {FILE}. Sie dürfen keine Dateien mit dieser Erweiterung hochladen',
 
     'request.not_post' => 'Ungültige Anfrage. Die Anfragemethode muss POST sein.',
-    'request.invalid_csrf' => 'Ungültige Anfrage. Das CSRF-Token ist ungültig oder abgelaufen. Bitte versuchen Sie es erneut.'
+    'request.invalid_csrf' => 'Ungültige Anfrage. Das CSRF-Token ist ungültig oder abgelaufen. Bitte versuchen Sie es erneut.',
+    'request.invalid_captcha' => 'Ungültige Anfrage. Das Captcha ist falsch. Bitte versuchen Sie es erneut.',
+    'request.throttled' => 'Zu viele Anfragen. Bitte warten Sie einen Moment, bevor Sie es erneut versuchen.',
 ];

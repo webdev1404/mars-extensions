@@ -25,5 +25,7 @@ return [
     'upload.invalid_type' => 'Errore di caricamento. Tipo di file non valido per il file: {FILE}. Non è consentito caricare file con questa estensione',
 
     'request.not_post' => 'Richiesta non valida. Il metodo della richiesta deve essere POST.',
-    'request.invalid_csrf' => 'Richiesta non valida. Il token CSRF non è valido o è scaduto. Si prega di riprovare.'
+    'request.invalid_csrf' => 'Richiesta non valida. Il token CSRF non è valido o è scaduto. Si prega di riprovare.',
+    'request.invalid_captcha' => 'Richiesta non valida. Il captcha non è corretto. Si prega di riprovare.',
+    'request.throttled' => 'Troppi richieste. Si prega di attendere un po\' prima di riprovare.',
 ];

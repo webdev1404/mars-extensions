@@ -22,11 +22,9 @@ return [
     'ip' => "Field '{FIELD}' must be a valid IP address.",
     'pattern' => "Field '{FIELD}' doesn't match the required pattern",
     'unique' => "Field '{FIELD}' must be unique. The value already exists.",
-    'captcha' => "The captcha is invalid. Please try again.",
     'username' => "Field '{FIELD}' must be a valid username.",
     'username.length' => "Field '{FIELD}' must be a valid username. It must be between {MIN} and {MAX} characters long.",
     'username.chars' => "Field '{FIELD}' must be a valid username. It can only contain letters, numbers, dots (.), underscores (_) and hyphens (-).",
     'password' => "Field '{FIELD}' must be a valid password.",
     'password.length' => "Field '{FIELD}' must be a valid password. It must be between {MIN} and {MAX} characters long."
 ];
-
