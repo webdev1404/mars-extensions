@@ -15,5 +15,10 @@
             "name": "Adrian Razvan Chis",
             "email": "sargon1404@webdev1404.com"
         }
-    ]
+    ],
+    "autoload": {
+        "files": [
+            "autoload.php"
+        ]
+    }
 }

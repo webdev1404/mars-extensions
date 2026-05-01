@@ -2,5 +2,5 @@
 
 return [
     'title' => 'My Theme',
-    'description' => 'The default theme for Mars',
+    'description' => 'The default theme for Mars'
 ];
