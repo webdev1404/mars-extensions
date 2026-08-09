@@ -2,9 +2,6 @@
     "name": "webdev1404/mars-extensions",
     "type": "mars-framework-extensions",
     "description": "Mars Framework Extensions",
-    "require": {
-        "webdev1404/mars-framework": "dev-master"
-    },
     "license": "MIT",
     "authors": [
         {

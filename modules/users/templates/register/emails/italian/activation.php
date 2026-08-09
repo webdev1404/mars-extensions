@@ -1,4 +1,5 @@
-@data("subject", "Attiva il tuo account su $config.site.name")
+@data.subject = "Attiva il tuo account su $config.site.name"
+
 Saluti {{ $user.username }},
 
 Grazie per esserti registrato su {{ $config.site.name }}. Per attivare il tuo account, fai clic sul link sottostante:

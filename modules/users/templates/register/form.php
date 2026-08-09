@@ -1,54 +1,57 @@
+@title = register.title
+@breadcrumbs = register.title
+
 <div id="register-form">
     <article>
-        <form action="{{ $app.url }}" method="post">
+        <form action="{{ $url->get('users.register') }}" method="post">
             @csrf
 
             <div class="form-fields" id="register-form-fields">
-                {{ $plugins.run('user.register.form.fields.before') }}
+                {{ $plugins->run('user.register.form.fields.before') }}
 
                 <div class="form-field">
-                    <label for="username">{{ username }}</label>
-                    <input type="text" id="username" name="username" value="{{ $model.username }}" required />
+                    <label for="username">{{ register.username }}</label>
+                    <input type="text" id="username" name="username" value="{{ $model->username }}" required />
                 </div>
                 <div class="form-field">
-                    <label for="email">{{ email }}</label>
-                    <input type="email" id="email" name="email" value="{{ $model.email }}" required />
+                    <label for="email">{{ register.email }}</label>
+                    <input type="email" id="email" name="email" value="{{ $model->email }}" required />
                 </div>
                 <div class="form-field">
-                    <label for="password_clean">{{ password }}</label>
+                    <label for="password_clean">{{ register.password }}</label>
                     <input type="password" id="password_clean" name="password_clean" required />
                 </div>
                 <div class="form-field">
-                    <label for="password_confirm">{{ password_confirm }}</label>
+                    <label for="password_confirm">{{ register.password_confirm }}</label>
                     <input type="password" id="password_confirm" name="password_confirm" required />
                 </div>
 
-                @if ($config.user.registration.show_captcha)
+                @if ($captcha->enabled && $config->users->registration->captcha->show)
                 <div class="form-field">
                     <label for="captcha"></label>
-                    {! $app.captcha.output() !}
+                    {! $app->captcha->render() !}
                 </div>
                 @endif
 
-                {{ $plugins.run('user.register.form.fields.after') }}
+                {{ $plugins->run('user.register.form.fields.after') }}
 
                 <div class="form-field agreement-field">
                     <label for="agreement"></label>
-                    @if ($config.user.registration.show_agreement)
-                    <input type="checkbox" id="agreement" name="agreement" required /> <a href="{{ $url.route('users.register.agreement') }}" data-modal="#" target="_blank">{{ agreement }}</a>
+                    @if ($config->users->registration->agreement->show)
+                    <input type="checkbox" id="agreement" name="agreement" required /> <a href="{{ $url->get('users.register.agreement') }}" data-modal="#" target="_blank">{{ register.agreement.link }}</a>
                     | 
                     @endif
-                    <a href="{{ $url.route('users.register.resend_activation') }}">{{ resend_activation_link }}</a>
+                    <a href="{{ $url->get('users.register.resend_activation') }}">{{ register.resend_activation.link }}</a>
                 </div>
                 
 
-                {{ $plugins.run('user.register.form.submit.before') }}
+                {{ $plugins->run('user.register.form.submit.before') }}
                 
                 <div class="form-field">
-                    <input type="submit" data-submit="true" value="{{ register }}" />
+                    <input type="submit" data-ajax="true" value="{{ register.submit }}" />
                 </div>
 
-                {{ $plugins.run('user.register.form.submit.after') }}
+                {{ $plugins->run('user.register.form.submit.after') }}
             </div>
 
         </form>

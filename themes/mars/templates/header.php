@@ -1,13 +1,21 @@
 <!doctype html>
-<html lang="{! $theme.outputLang() !}">
+<html lang="{! $theme->renderLang() !}">
 <head>
-{! $theme.outputHead() !}
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+{! $theme->renderHead() !}
 </head>
 
 <body>
     <header>
-        <span class="logo">{{ $config.site.name }}</span>
-        @template ('menu')
+        <span class="logo">{! $theme->renderSiteName() !}</span>
+        <nav>
+            {! $theme->renderMenu('main') !}
+        </nav>
     </header>
 
-{! $theme.outputAlerts() !}
+<div id="page-header">
+    {! $theme->renderHeading() !}
+    {! $theme->renderBreadcrumbs() !}
+</div>
+
+{! $theme->renderAlerts() !}

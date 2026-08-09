@@ -1,4 +1,5 @@
-@data("subject", "Registrierungsversuch für $config.site.name erkannt")
+@data.subject = "Registrierungsversuch für $config.site.name erkannt"
+
 Grüße {{ $user->username }},
 
 Jemand (möglicherweise Sie) hat versucht, sich mit dieser E-Mail-Adresse zu registrieren. Falls Sie das nicht waren, ist keine Aktion erforderlich – Ihr Konto ist sicher.

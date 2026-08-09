@@ -1,4 +1,5 @@
-@data("subject", "Tentative d'enregistrement de compte détectée sur $config.site.name")
+@data.subject = "Tentative d'enregistrement de compte détectée sur $config.site.name"
+
 Bonjour {{ $user->username }},
 
 Quelqu'un (peut-être vous) a tenté de s'enregistrer avec cette adresse e-mail. Si ce n'était pas vous, aucune action n'est nécessaire – votre compte est sécurisé.

@@ -13,6 +13,7 @@ return [
     'file.copy' => 'Error al copiar el archivo {SOURCE} a {DESTINATION}',
     'file.move' => 'Error al mover el archivo {SOURCE} a {DESTINATION}',
 
+    'dir.not_exist' => 'El directorio {DIR} no existe.',
     'dir.create' => 'Error al crear la carpeta: {DIR}',
     'dir.delete' => 'Error al eliminar la carpeta: {DIR}',
     'dir.move' => 'Error al mover la carpeta {SOURCE} a {DESTINATION}',

@@ -16,11 +16,11 @@ $this->module([
 ], 'users', 'register@registrationAgreement', name: 'users.register.agreement');
 
 $this->module([
-    '*' => '/register/activate/{code}/{key}',
-    'fr' => '/inscription/activation/{code}/{key}',
-    'de' => '/registrierung/aktivieren/{code}/{key}',
-    'it' => '/registrazione/attivare/{code}/{key}',
-    'es' => '/registro/activar/{code}/{key}',
+    '*' => '/register/activate/{uuid}/{token}',
+    'fr' => '/inscription/activation/{uuid}/{token}',
+    'de' => '/registrierung/aktivieren/{uuid}/{token}',
+    'it' => '/registrazione/attivare/{uuid}/{token}',
+    'es' => '/registro/activar/{uuid}/{token}',
 ], 'users', 'register@activate', name: 'users.register.activate');
 
 $this->module([

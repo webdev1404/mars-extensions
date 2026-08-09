@@ -1,3 +1,6 @@
+@title = users:register.agreement.title
+@breadcrumbs = [register.title => 'users.register']
+
 <div class="registration-agreement">
     <h1>Accord d'inscription</h1>
     <p>

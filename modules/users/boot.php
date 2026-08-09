@@ -1,13 +1,9 @@
 <?php
-//$user = new \Modules\Users\User;
-//var_dump($user);
 
-/*
-use Modules\Users\User;
+use Mars\App;
+
+use Modules\Users\System\User;
 
 $app->set('user', function () {
     return new User;
 });
-
-var_dump($app->user);
-*/

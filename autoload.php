@@ -22,6 +22,9 @@ use Mars\App;
         'Modules' => function () use ($app) {
             return $app->modules;
         },
+        'Plugins' => function () use ($app) {
+            return $app->plugins;
+        },
     ];
 
     $parts = explode('\\', $name);

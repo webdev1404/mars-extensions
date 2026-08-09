@@ -39,11 +39,6 @@ class User extends Item
      */
     protected static array $ignore = ['password_clean'];
 
-    public function langtest()
-    {
-        return App::__('users.err_username_exists');
-    }
-
     /**
      * @internal
      */
@@ -59,18 +54,18 @@ class User extends Item
             //check for existing username and email
             $username_exists = $this->app->db->exists($this->getTable(), ['username_crc32' => strtolower(crc32($this->username)), 'username' => $this->username]);
             if ($username_exists) {
-                $this->errors->add(App::__('users.err_username_exists'));
+                $this->errors->add(App::__('users:err.username.exists'));
                 $ok = false;
             }
 
             $email_exists = $this->app->db->exists($this->getTable(), ['email_crc32' => strtolower(crc32($this->email)), 'email' => $this->email]);
             if ($email_exists) {
-                $this->errors->add(App::__('users.err_email_exists'));
+                $this->errors->add(App::__('users:err.email.exists'));
                 $ok = false;
             }
         }
 
-        return $this->app->plugins->run('user_validate', $ok, $this);
+        return $this->app->plugins->run('user.validate', $ok, $this);
     }
 
     /**
@@ -78,11 +73,11 @@ class User extends Item
      */
     public function save() : int
     {
-        $this->app->plugins->run('user_save_before', $this);
+        $this->app->plugins->run('user.save.before', $this);
 
         $ret = parent::save();
 
-        $this->app->plugins->run('user_save_after', $this);
+        $this->app->plugins->run('user.save.after', $this);
 
         return $ret;
     }
@@ -94,7 +89,7 @@ class User extends Item
     {
         parent::prepare();
 
-        $this->app->plugins->run('user_prepare', $this);
+        $this->app->plugins->run('user.prepare', $this);
     }
 
     /**
@@ -118,7 +113,7 @@ class User extends Item
             $this->registration_ip = ['function' => 'INET6_ATON', 'value' => $this->app->ip];
         }
 
-        $this->app->plugins->run('user_process', $this);
+        $this->app->plugins->run('user.process', $this);
     }
 
     /**
@@ -142,7 +137,7 @@ class User extends Item
         $this->activated = 1;
         $this->activation_code = '';
 
-        $this->app->plugins->run('user_activate', $this);
+        $this->app->plugins->run('user.activate', $this);
 
         return $this->save();
     }

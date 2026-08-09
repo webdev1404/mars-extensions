@@ -1,36 +1,39 @@
-<div id="resend-activation-form">
+@title = forgot.username.title
+@breadcrumbs = forgot.username.title
+
+<div id="forgot-username-form">
     <article>
-        <form action="{{ $app.url }}" method="post">
+        <form action="{{ $url->route('users.forgot.username') }}" method="post">
             @csrf
 
             <div class="form-fields">
-                {{ $plugins.run('user.forgot.username.form.fields.before') }}
+                {{ $plugins->run('user.forgot.username.form.fields.before') }}
 
                 <div class="form-field">
-                    <label for="email">{{ email }}</label>
+                    <label for="email">{{ register.email }}</label>
                     <input type="email" id="email" name="email" value="" required />
                 </div>
 
                 <div class="form-field">
                     <label for="forgot-links"></label>
-                    <a href="{{ $url.route('users.login') }}">{{ users:link.login }}</a> | 
-                    <a href="{{ $url.route('users.forgot.password') }}">{{ users:link.forgot_password }}</a>
+                    <a href="{{ $url->route('users.login') }}">{{ links.login }}</a> | 
+                    <a href="{{ $url->route('users.forgot.password') }}">{{ links.forgot.password }}</a>
                 </div>
 
-                @if ($config.user.forgot.show_captcha)
+                @if ($captcha->enabled && $config->users->forgot->captcha->show)
                 <div class="form-field">
                     <label for="captcha"></label>
-                    {! $app.captcha.output() !}
+                    {! $app->captcha->render() !}
                 </div>
                 @endif
 
-                {{ $plugins.run('user.forgot.username.form.fields.after') }}
+                {{ $plugins->run('user.forgot.username.form.fields.after') }}
 
                 <div class="form-field">
-                    <input type="submit" data-submit="true" value="{{ send }}" />
+                    <input type="submit" data-ajax="true" value="{{ forgot.username.submit }}" />
                 </div>
 
-                {{ $plugins.run('user.forgot.username.form.submit.after') }}
+                {{ $plugins->run('user.forgot.username.form.submit.after') }}
             </div>
 
         </form>

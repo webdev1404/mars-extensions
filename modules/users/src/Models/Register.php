@@ -1,7 +1,6 @@
 <?php
 namespace Modules\Users\Models;
 
-use Mars\App;
 use Mars\Mvc\Models\Entity;
 use Modules\Users\User;
 
@@ -21,10 +20,10 @@ class Register extends Entity
      * @internal
      */
     protected static array $validation_error_strings = [
-        'username' => ['req' => 'err.username', 'username' => 'err.username.invalid'],
-        'email' => ['req' => 'err.email', 'email' => 'err.email.invalid'],
-        'password_clean' => ['req' => 'err.password', 'password' => 'err.password.invalid'],
-        'agreement' => ['req' => 'err.agreement'],
+        'username' => ['req' => 'register.err.username', 'username' => 'register.err.username.invalid'],
+        'email' => ['req' => 'register.err.email', 'email' => 'register.err.email.invalid'],
+        'password_clean' => ['req' => 'register.err.password', 'password' => 'register.err.password.invalid'],
+        'agreement' => ['req' => 'register.err.agreement'],
     ];
 
     /**
@@ -68,7 +67,7 @@ class Register extends Entity
      */
     public function register() : bool
     {
-        if (!$this->config->user->registration->show_agreement) {
+        if (!$this->config->users->registration->show_agreement) {
             $this->setValidationRulesToSkip('agreement');
         }
 
@@ -88,18 +87,6 @@ class Register extends Entity
     }
 
     /**
-     * Retrieves a user by email
-     * @return User|null The user if found, null otherwise
-     */
-    public function getUserByEmail() : ?User
-    {
-        $user = new User;
-        $user->loadByEmail($this->email);
-        
-        return $user->exists() ? $user : null;
-    }
-
-    /**
      * Validates the registration data
      * @return bool True if data is valid, false otherwise
      */
@@ -111,7 +98,7 @@ class Register extends Entity
         }
 
         if ($this->password_clean != $this->password_confirm) {
-            $this->errors->add($this->__('err.password.mismatch'));
+            $this->errors->add($this->__('register.err.password.mismatch'));
             $ok = false;
         }
 
@@ -120,13 +107,13 @@ class Register extends Entity
 
     /**
      * Activates the user account
-     * @param string $code The user's code
+     * @param string $uuid The user's UUID
      * @param string $key The activation key
      * @return bool True if activation is successful, false otherwise
      */
-    public function activate(string $code, string $key) : bool
+    public function activate(string $uuid, string $key) : bool
     {
-        $this->user = new User($code);
+        $this->user = new User($uuid);
         return $this->user->activate($key);
     }
 }

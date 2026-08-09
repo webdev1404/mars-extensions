@@ -2,15 +2,14 @@
 
 namespace Modules\Users\Controllers;
 
-use Mars\Mvc\Controller;
 use Modules\Users\User;
 
-class Register extends Controller
+class Register extends Users
 {
     /**
      * @internal
      */
-    public protected(set) string $default_method = 'form';
+    public protected(set) string $model_class = \Modules\Users\Models\Register::class;
 
     /**
      * @internal
@@ -18,20 +17,19 @@ class Register extends Controller
     public protected(set) bool $accept_json = true;
 
     /**
-     * Initializes the controller
+     * @internal
      */
-    protected function init()
-    {
-        $this->loadConfig('user');
-        $this->loadLanguage();
-    }
-    
+    public protected(set) array $targets = [
+        'register' => 'form',
+        'resendActivationCode' => 'resendActivationForm',
+    ];
+
     /**
      * Displays the registration form
      */
     public function form()
     {
-        if (!$this->config->user->registration->open) {
+        if (!$this->config->users->registration->open) {
             return $this->registrationClosed();
         }
 
@@ -45,17 +43,17 @@ class Register extends Controller
      */
     public function register()
     {
-        $this->model->bindList(['username', 'email', 'password_clean', 'password_confirm', 'agreement']);
-        
-        if (!$this->config->user->registration->open) {
+        if (!$this->config->users->registration->open) {
             return false;
         }
 
+        $this->model->bindList(['username', 'email', 'password_clean', 'password_confirm', 'agreement']);
+
         if (!$this->canPost(
-            $this->config->user->registration->show_captcha,
-            $this->config->user->registration->throttle->enable ? 'users.register' : null,
-            $this->config->user->registration->throttle->max_attempts,
-            $this->config->user->registration->throttle->block_duration
+            $this->config->users->registration->captcha->show,
+            $this->config->users->registration->throttle->enable ? 'users.register' : null,
+            $this->config->users->registration->throttle->max_attempts,
+            $this->config->users->registration->throttle->block_duration
         )) {
             return false;
         }
@@ -68,13 +66,11 @@ class Register extends Controller
                 // send no indication to the user for security reasons, but resend the activation email if the email belongs to an unactivated account
                 // if the account is already activated, send an email with the username and a password reset link
 
-                if ($this->config->user->registration->notify->same_email) {
-                    $user = $this->model->getUserByEmail();
+                if ($this->config->users->registration->notify->same_email) {
+                    $user = $this->getUserByEmail($this->model->email);
 
                     if ($user) {
                         if (!$user->activated) {
-                            $user->createActivationKey();
-
                             $this->sendActivationEmail($user);
                         } else {
                             $this->sendAccountExistsEmail($user);
@@ -82,7 +78,7 @@ class Register extends Controller
                     }
                 }
 
-                $this->app->message($this->__('success'));
+                $this->app->message($this->__('register.success'));
 
                 return;
             }
@@ -97,7 +93,7 @@ class Register extends Controller
 
         $this->plugins->run('user.register.success', $this->model, $this);
 
-        $this->app->message($this->__('success'));
+        $this->app->message($this->__('register.success'));
     }
 
     /**
@@ -105,7 +101,7 @@ class Register extends Controller
      */
     protected function registrationClosed()
     {
-        $this->view->render(__METHOD__);
+        return $this->view->getTemplateByLanguage('text', 'registration-closed');
     }
 
     /**
@@ -114,10 +110,10 @@ class Register extends Controller
      */
     protected function sendActivationEmail(User $user)
     {
-        $activation_link = $this->url->route('users.register.activate', ['code' => $user->code, 'key' => $user->activation_key]);
+        $activation_url = $this->url->route('users.register.activate', ['uuid' => $user->uuid, 'token' => $user->getActivationToken()]);
 
         $email = $user->email;
-        $body = $this->email->get('activation', ['user' => $user, 'activation_link' => $activation_link]);
+        $body = $this->email->get('activation', ['user' => $user, 'activation_url' => $activation_url]);
         $subject = $this->email->subject;
 
         $this->plugins->run('user.register.send.activation.email', $email, $subject, $body, $this);
@@ -135,7 +131,7 @@ class Register extends Controller
         $body = $this->email->get('account-exists', ['user' => $user]);
         $subject = $this->email->subject;
 
-        $this->plugins->run('user.register.send.account.exists.email', $email, $subject, $body, $this);
+        $this->plugins->run('user.register.send_account_exists_email', $email, $subject, $body, $this);
 
         $this->mail->send($email, $subject, $body);
     }
@@ -145,11 +141,11 @@ class Register extends Controller
      */
     protected function sendAdminNotificationEmail()
     {
-        if (!$this->config->user->registration->notify->enable) {
+        if (!$this->config->users->registration->notify->enable) {
             return;
         }
 
-        $emails = $this->config->user->registration->notify->emails;
+        $emails = $this->config->users->registration->notify->emails;
         if (!$emails) {
             $emails = $this->config->site->emails;
         }
@@ -157,7 +153,7 @@ class Register extends Controller
         $body = $this->email->get('notification', ['user' => $this->model->user]);
         $subject = $this->email->subject;
 
-        $this->plugins->run('user.register.send.notification.email', $emails, $subject, $body, $this);
+        $this->plugins->run('user.register.send_notification_email', $emails, $subject, $body, $this);
 
         $this->mail->send($emails, $subject, $body);
     }
@@ -167,11 +163,11 @@ class Register extends Controller
      */
     public function registrationAgreement()
     {
-        if (!$this->config->user->registration->open) {
+        if (!$this->config->users->registration->open) {
             return $this->registrationClosed();
         }
         
-        $this->view->render();
+        $this->view->renderByLanguage('text', 'registration-agreement');
     }
 
     /**
@@ -179,7 +175,9 @@ class Register extends Controller
      */
     public function resendActivationForm()
     {
-        $this->view->render(__METHOD__);
+        $this->plugins->run('user.register.resend_activation_form', $this);
+        
+        $this->view->render('resend-activation-form');
     }
 
     /**
@@ -187,52 +185,58 @@ class Register extends Controller
      */
     public function resendActivationCode()
     {
-        $this->model->bindList(['email']);
-
         if (!$this->canPost(
-            $this->config->user->registration->show_captcha,
-            $this->config->user->registration->throttle->enable ? 'users.register' : null,
-            $this->config->user->registration->throttle->max_attempts,
-            $this->config->user->registration->throttle->block_duration
+            $this->config->users->registration->captcha->show,
+            $this->config->users->registration->throttle->enable ? 'users.register' : null,
+            $this->config->users->registration->throttle->max_attempts,
+            $this->config->users->registration->throttle->block_duration
         )) {
             return false;
         }
 
-        $user = $this->model->getUserByEmail();
+        if (!$this->validate(['email' => 'req|email'], ['email' => ['req' => 'register.err.email', 'email' => 'register.err.email.invalid']])) {
+             $this->app->errors->set($this->errors);
+
+            return false;
+        }
+
+        $user = $this->getUserByEmail($this->post->get('email'));
         if ($user) {
             if (!$user->activated) {
-                $user->createActivationKey();
-
                 $this->sendActivationEmail($user);
             }
         }
 
-        $this->app->message($this->__('resend_activation_success'));
+        $this->plugins->run('user.register.resend_activation_code', $user, $this);
+
+        $this->app->messages->add($this->__('register.resend_activation.success'));
+
+        return true;
     }
 
     /**
      * Handles account activation
-     * @param string $code The user's code
-     * @param string $key The activation key
+     * @param string $uuid The user's UUID
+     * @param string $token The activation token
      */
-    public function activate(string $code, string $key)
+    public function activate(string $uuid, string $token)
     {
-        if (!$code || !$key) {
-            $this->app->error($this->__('err_activation_params'));
+        if (!$uuid || !$token) {
+            $this->app->error($this->__('register.err.activation.params'));
 
             return;
         }
 
-        if (!$this->model->activate($code, $key)) {
+        if (!$this->model->activate($uuid, $token)) {
             $this->plugins->run('user.activate.failed', $this->model, $this);
 
-            $this->app->error($this->__('activation_failed'));
+            $this->app->error($this->__('register.activation.failed'));
 
             return;
         }
 
         $this->plugins->run('user.activate.success', $this->model, $this);
 
-        $this->app->message($this->__('activation_success'));
+        $this->app->message($this->__('register.activation.success'));
     }
 }

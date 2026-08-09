@@ -1,4 +1,5 @@
-@data("subject", "Nuova registrazione su $config.site.name")
+@data.subject = "Nuova registrazione su $config.site.name"
+
 Saluti,
 
 Un nuovo utente si è registrato su {{ $config.site.name }}. Ecco i dettagli:

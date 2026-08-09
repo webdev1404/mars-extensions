@@ -1,30 +1,33 @@
+@title = register.resend_activation.title
+@breadcrumbs = [register.title => users.register]
+
 <div id="resend-activation-form">
     <article>
-        <form action="{{ $app.url }}" method="post">
+        <form action="{{ $url->route('users.register.resend_activation') }}" method="post">
             @csrf
 
             <div class="form-fields">
-                {{ $plugins.run('user.register.resend.activation.form.fields.before') }}
+                {{ $plugins->run('user.register.resend.activation.form.fields.before') }}
 
                 <div class="form-field">
-                    <label for="email">{{ email }}</label>
-                    <input type="email" id="email" name="email" value="" required />
+                    <label for="email">{{ register.email }}</label>
+                    <input type="email" id="email" name="email" value="" />
                 </div>
 
-                @if ($config.user.registration.show_captcha)
+                @if ($captcha->enabled && $config->users->registration->show_captcha)
                 <div class="form-field">
                     <label for="captcha"></label>
-                    {! $app.captcha.output() !}
+                    {! $app->captcha->render() !}
                 </div>
                 @endif
 
-                {{ $plugins.run('user.register.resend.activation.form.fields.after') }}
+                {{ $plugins->run('user.register.resend.activation.form.fields.after') }}
 
                 <div class="form-field">
-                    <input type="submit" data-submit="true" value="{{ resend_activation_button }}" />
+                    <input type="submit" data-ajax="true" value="{{ register.resend_activation.submit }}" />
                 </div>
 
-                {{ $plugins.run('user.register.resend.activation.form.submit.after') }}
+                {{ $plugins->run('user.register.resend.activation.form.submit.after') }}
             </div>
 
         </form>

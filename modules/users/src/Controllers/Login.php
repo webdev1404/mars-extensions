@@ -2,14 +2,12 @@
 
 namespace Modules\Users\Controllers;
 
-use Mars\Mvc\Controller;
-
-class Login extends Controller
+class Login extends Users
 {
     /**
      * @internal
      */
-    public protected(set) string $default_method = 'form';
+    public protected(set) string $model_class = \Modules\Users\Models\Login::class;
 
     /**
      * @internal
@@ -17,15 +15,14 @@ class Login extends Controller
     public protected(set) bool $accept_json = true;
 
     /**
-     * Initializes the controller
+     * @internal
      */
-    protected function init()
-    {
-        $this->loadLanguage();
-    }
+    public protected(set) array $targets = [
+        'login' => 'form'
+    ];
     
     /**
-     * Displays the registration form
+     * Displays the login form
      */
     public function form()
     {
@@ -39,22 +36,22 @@ class Login extends Controller
      */
     public function login()
     {
-        $this->model->bindList(['username', 'password']);
+        var_dump($this->app->user->is_logged);
+        $this->model->bindList(['username', 'password', 'remember_me']);
 
-        if (!$this->request->canPost()) {
+        /*if (!$this->canPost(
+            $this->config->users->login->captcha->show,
+            $this->config->users->login->throttle->enable ? 'users.login' : null,
+            $this->config->users->login->throttle->max_attempts,
+            $this->config->users->login->throttle->block_duration
+        )) {
             return false;
-        }
-
-        if (!$this->model->validate()) {
-            $this->plugins->run('user.login.validation_error', $this->model, $this);
-            
-            return false;
-        }
+        }*/
 
         if (!$this->model->login()) {
             $this->plugins->run('user.login.error', $this->model, $this);
 
-            $this->errors->add($this->__('err_login'));
+            $this->app->errors->set($this->model->errors);
 
             return false;
         }

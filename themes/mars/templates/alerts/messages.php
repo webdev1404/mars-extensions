@@ -1,5 +1,7 @@
-<div id="messages-container">	
+<div class="system-alerts system-alerts-messages">
+    <ul>
     @foreach ($messages as $message)
-        {! $message['text'] | nl2br !}<br />
+    <li>{! $message['text'] | nl2br !}</li>
     @endforeach
+    </ul>
 </div>

@@ -13,6 +13,7 @@ return [
     'file.copy' => 'Fehler beim Kopieren der Datei {SOURCE} nach {DESTINATION}',
     'file.move' => 'Fehler beim Verschieben der Datei {SOURCE} nach {DESTINATION}',
 
+    'dir.not_exist' => 'Das Verzeichnis {DIR} existiert nicht.',
     'dir.create' => 'Fehler beim Erstellen des Ordners: {DIR}',
     'dir.delete' => 'Fehler beim Löschen des Ordners: {DIR}',
     'dir.move' => 'Fehler beim Verschieben des Ordners {SOURCE} nach {DESTINATION}',

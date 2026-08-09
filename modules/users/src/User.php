@@ -30,11 +30,6 @@ class User extends Item
     public string $password_clean = '';
 
     /**
-     * @var string $activation_key The activation key generated when the user is registered
-     */
-    public string $activation_key = '';
-
-    /**
      * @internal
      */
     protected static string $table = 'users';
@@ -47,7 +42,12 @@ class User extends Item
     /**
      * @internal
      */
-    protected static array $ignore = ['password_clean', 'activation_key'];
+    protected static string $table_password_reset_tokens = 'users_password_reset_tokens';
+
+    /**
+     * @internal
+     */
+    protected static array $ignore = ['password_clean'];
 
     /**
      * @internal
@@ -61,37 +61,22 @@ class User extends Item
         $ok = true;
         if (!$this->id) {
             //check for existing username and email
-            $username_exists = $this->app->db->exists($this->getTable(), ['username_crc32' => strtolower(crc32($this->username)), 'username' => $this->username]);
+            $username_exists = $this->db->exists($this->getTable(), ['username_crc32' => crc32(strtolower($this->username)), 'username' => $this->username]);
             if ($username_exists) {
-                $this->errors->add(App::__(['err_username_exists', 'validate.unique'], ['{FIELD}' => 'username']), 'username', 'username.exists');
+                $this->errors->add(App::__('module.users:register.err.username.exists', ['{FIELD}' => 'username']), 'username', 'username.exists');
 
                 $ok = false;
             }
             
-            $email_exists = $this->app->db->exists($this->getTable(), ['email_crc32' => strtolower(crc32($this->email)), 'email' => $this->email]);
+            $email_exists = $this->db->exists($this->getTable(), ['email_crc32' => crc32(strtolower($this->email)), 'email' => $this->email]);
             if ($email_exists) {
-                $this->errors->add(App::__(['err_email_exists', 'validate.unique'], ['{FIELD}' => 'email']), 'email', 'email.exists');
+                $this->errors->add(App::__('module.users:register.err.email.exists', ['{FIELD}' => 'email']), 'email', 'email.exists');
                 
                 $ok = false;
             }
         }
 
-        return $this->app->plugins->run('user.validate', $ok, $this);
-    }
-
-    /**
-     * Loads the users config
-     */
-    protected function loadConfig()
-    {
-        static $loaded = false;
-        if ($loaded) {
-            return;
-        }
-
-        $loaded = true;
-        
-        $this->app->modules->get('users')->loadConfig('user');
+        return $this->plugins->run('user.validate', $ok, $this);
     }
 
     /**
@@ -101,7 +86,7 @@ class User extends Item
     {
         parent::prepare();
 
-        $this->app->plugins->run('user.prepare', $this);
+        $this->plugins->run('user.prepare', $this);
     }
 
     /**
@@ -109,14 +94,14 @@ class User extends Item
      */
     protected function process()
     {
-        $this->username_crc32 = strtolower(crc32($this->username));
-        $this->email_crc32 = strtolower(crc32($this->email));
+        $this->username_crc32 = crc32(strtolower($this->username));
+        $this->email_crc32 = crc32(strtolower($this->email));
 
         if ($this->password_clean) {
-            $this->password = $this->app->security->hashPassword($this->password_clean);
+            $this->password = $this->app->hasher->getPassword($this->password_clean);
         }
 
-        $this->app->plugins->run('user.process', $this);
+        $this->plugins->run('user.process', $this);
     }
 
     /**
@@ -126,8 +111,8 @@ class User extends Item
     {
         $this->status = 1;
         $this->activated = 0;
-        $this->code = $this->app->random->getString(32);
-        $this->code_crc32 = crc32($this->code);
+        $this->uuid = $this->app->id->getUuid();
+        $this->uuid_crc32 = crc32($this->uuid);
         $this->registration_timestamp = time();
         $this->registration_ip = ['function' => 'INET6_ATON', 'value' => $this->app->ip];
     }
@@ -135,13 +120,13 @@ class User extends Item
     /**
      * @internal
      */
-    public function save() : int
+    public function insert() : int
     {
-        $this->app->plugins->run('user.save.before', $this);
+        $this->plugins->run('user.insert.before', $this);
 
-        $ret = parent::save();
+        $ret = parent::insert();
 
-        $this->app->plugins->run('user.save.after', $ret, $this);
+        $this->plugins->run('user.insert.after', $ret, $this);
 
         return $ret;
     }
@@ -149,36 +134,50 @@ class User extends Item
     /**
      * @internal
      */
-    public function insert() : int
+    public function update() : int
     {
-        $this->loadConfig();
+        $this->plugins->run('user.update.before', $this);
 
-        $id = parent::insert();
-        if (!$id) {
-            return $id;
-        }
+        $ret = parent::update();
 
-        $this->createActivationKey();
+        $this->plugins->run('user.update.after', $ret, $this);
 
-        return $id;
+        return $ret;
+    }
+
+    /**
+     * @internal
+     */
+    public function save() : int
+    {
+        $this->plugins->run('user.save.before', $this);
+
+        $ret = parent::save();
+
+        $this->plugins->run('user.save.after', $ret, $this);
+
+        return $ret;
     }
 
     /**
      * Creates an activation key for the user and saves it in the database
+     * @return string The activation key
      */
-    public function createActivationKey()
+    public function getActivationToken() : string
     {
         $this->db->delete(static::$table_activation_tokens, ['user_id' => $this->id]);
 
-        $this->activation_key = $this->app->random->getString(32);
+        $token = $this->app->random->getString(32);
 
         $activation_data = [
             'user_id' => $this->id,
-            'token' => $this->app->security->getToken($this->activation_key),
-            'expires_at' => time() + ($this->app->config->user->activation->expires_days * 3600 * 24)
+            'token' => $this->app->hasher->getToken($token),
+            'expires_at' => time() + ($this->app->config->users->activation->expires_hours * 3600)
         ];
         
-        $this->app->db->insert(static::$table_activation_tokens, $activation_data);
+        $this->db->insert(static::$table_activation_tokens, $activation_data);
+
+        return $token;
     }
 
     /**
@@ -206,7 +205,7 @@ class User extends Item
         }
 
         //is the key valid?
-        if (!$this->app->security->verifyToken($key, $row->token)) {
+        if (!$this->app->hasher->verifyToken($key, $row->token)) {
             return false;
         }
 
@@ -214,7 +213,7 @@ class User extends Item
 
         $this->activated = 1;
 
-        $this->app->plugins->run('user.activate', $this);
+        $this->plugins->run('user.activate', $this);
 
         return $this->save();
     }
@@ -224,7 +223,7 @@ class User extends Item
      */
     public function getRowByName(string $name) : ?object
     {
-        return $this->db->selectRow($this->getTable(), ['code' => $name, 'code_crc32' => crc32($name)]);
+        return $this->db->selectRow($this->getTable(), ['uuid' => $name, 'uuid_crc32' => crc32($name)]);
     }
 
     /**
@@ -234,7 +233,7 @@ class User extends Item
      */
     public function loadByUsername(string $username) : static
     {
-        $data = $this->db->selectRow($this->getTable(), ['username_crc32' => strtolower(crc32($username)), 'username' => $username]);
+        $data = $this->db->selectRow($this->getTable(), ['username_crc32' => crc32(strtolower($username)), 'username' => $username]);
 
         if (!$data) {
             return $this;
@@ -250,12 +249,82 @@ class User extends Item
      */
     public function loadByEmail(string $email) : static
     {
-        $data = $this->db->selectRow($this->getTable(), ['email_crc32' => strtolower(crc32($email)), 'email' => $email]);
+        $data = $this->db->selectRow($this->getTable(), ['email_crc32' => crc32(strtolower($email)), 'email' => $email]);
 
         if (!$data) {
             return $this;
         }
 
         return $this->load($data, true);
+    }
+
+    /**
+     * Creates a password reset key for the user and saves it in the database
+     * @return string The password reset key
+     */
+    public function getPasswordResetToken() : string
+    {
+        $this->db->delete(static::$table_password_reset_tokens, ['user_id' => $this->id]);
+
+        $token = $this->app->random->getString(32);
+
+        $data = [
+            'user_id' => $this->id,
+            'token' => $this->app->hasher->getToken($token),
+            'expires_at' => time() + ($this->app->config->users->forgot->password->expires_hours * 3600)
+        ];
+
+        $this->db->insert(static::$table_password_reset_tokens, $data);
+
+        return $token;
+    }
+
+    /**
+     * Verifies the password reset token for the user
+     * @param string $token The password reset token
+     * @param int|null $expired_at The timestamp to check for expiration, defaults to current time
+     * @return bool True if the token is valid, false otherwise
+     */
+    public function verifyPasswordResetToken(string $token, ?int $expired_at = null) : bool
+    {
+        if (!$this->id) {
+            return false;
+        }
+
+        $row = $this->db->selectRow(static::$table_password_reset_tokens, ['user_id' => $this->id]);
+        if (!$row) {
+            return false;
+        }
+
+        //has the token expired?
+        $expired_at ??= time();
+        if ($row->expires_at < $expired_at) {
+            return false;
+        }
+
+        //is the key valid?
+        if (!$this->app->hasher->verifyToken($token, $row->token)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Updates the user's password and deletes the password reset token
+     * @param string $new_password The new password
+     * @return bool True if the password was updated successfully, false otherwise
+     */
+    public function updatePassword(string $new_password) : bool
+    {
+        $this->password_clean = $new_password;
+
+        if (!$this->save()) {
+            return false;
+        }
+
+        $this->db->delete(static::$table_password_reset_tokens, ['user_id' => $this->id]);
+
+        return true;
     }
 }

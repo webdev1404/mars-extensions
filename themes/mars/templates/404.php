@@ -1,0 +1,4 @@
+@title = 404.title
+
+<h1>{{ 404.title }}</h1>
+<p>{{ 404.text }}</p>

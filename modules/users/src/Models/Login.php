@@ -3,7 +3,6 @@ namespace Modules\Users\Models;
 
 use Mars\App;
 use Mars\Mvc\Models\Entity;
-use Modules\Users\System\User;
 
 class Login extends Entity
 {
@@ -19,8 +18,8 @@ class Login extends Entity
      * @internal
      */
     protected static array $validation_error_strings = [
-        'username' => ['req' => 'err_username'],
-        'password' => ['req' => 'err_password']
+        'username' => ['req' => 'login.err.username'],
+        'password' => ['req' => 'login.err.password']
     ];
 
     /**
@@ -34,12 +33,27 @@ class Login extends Entity
     public string $password = '';
 
     /**
+     * @internal
+     */
+    public bool $remember_me = false;
+
+    /**
      * Handles the login process
      * @return bool True if login is successful, false otherwise
      */
     public function login() : bool
     {
-        $user = new User;
-        return $user->login($this->username, $this->password);
+        var_dump($this->username, $this->password, $this->remember_me);
+        if (!$this->validate()) {
+            return false;
+        }
+
+        if (!$this->app->user->login($this->username, $this->password)) {
+            $this->errors->add($this->__('login.err.invalid'));
+
+            return false;
+        }
+
+        return true;
     }
 }
