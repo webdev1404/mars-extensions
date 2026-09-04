@@ -1,34 +1,19 @@
 <?php
 /**
-* The User Class
+* The Users Class
 * @package Mars
 */
 
 namespace Modules\Users;
 
-use Mars\App;
-use Mars\Item;
+use Mars\Items;
 
 /**
- * The User Class
+ * The Users Class
  * Encapsulates methods for working with users
  */
-class User extends Item
+class Users extends Items
 {
-    /**
-     * @var string $password_cleanThe clean password
-     */
-    public string $password_clean = '';
-
-    /**
-     * @internal
-     */
-    protected static array $validation_rules = [
-        'username' => 'req|username:5:100',
-        'email' => 'req|email',
-        'password' => 'req|password'
-    ];
-
     /**
      * @internal
      */
@@ -37,135 +22,50 @@ class User extends Item
     /**
      * @internal
      */
-    protected static array $ignore = ['password_clean'];
+    protected static string $id_field = 'id';
 
     /**
      * @internal
      */
-    public function validate(array|object $data = []) : bool
-    {
-        if (!parent::validate($data)) {
-            return false;
-        }
-
-        $ok = true;
-
-        if (!$this->id) {
-            //check for existing username and email
-            $username_exists = $this->app->db->exists($this->getTable(), ['username_crc32' => strtolower(crc32($this->username)), 'username' => $this->username]);
-            if ($username_exists) {
-                $this->errors->add(App::__('users:err.username.exists'));
-                $ok = false;
-            }
-
-            $email_exists = $this->app->db->exists($this->getTable(), ['email_crc32' => strtolower(crc32($this->email)), 'email' => $this->email]);
-            if ($email_exists) {
-                $this->errors->add(App::__('users:err.email.exists'));
-                $ok = false;
-            }
-        }
-
-        return $this->app->plugins->run('user.validate', $ok, $this);
-    }
+    protected static string $class = User::class;
 
     /**
-     * @internal
-     */
-    public function save() : int
-    {
-        $this->app->plugins->run('user.save.before', $this);
-
-        $ret = parent::save();
-
-        $this->app->plugins->run('user.save.after', $this);
-
-        return $ret;
-    }
-
-    /**
-     * @internal
-     */
-    protected function prepare()
-    {
-        parent::prepare();
-
-        $this->app->plugins->run('user.prepare', $this);
-    }
-
-    /**
-     * @internal
-     */
-    protected function process()
-    {
-        $this->username_crc32 = strtolower(crc32($this->username));
-        $this->email_crc32 = strtolower(crc32($this->email));
-
-        if ($this->password_clean) {
-            $this->password = $this->app->security->hashPassword($this->password_clean);
-        }
-
-        if (!$this->id) {
-            $this->status = 1;
-            $this->activated = 0;
-            $this->activation_code = $this->app->random->getString(32);
-            $this->login_code = $this->app->random->getString(64);
-            $this->registration_timestamp = time();
-            $this->registration_ip = ['function' => 'INET6_ATON', 'value' => $this->app->ip];
-        }
-
-        $this->app->plugins->run('user.process', $this);
-    }
-
-    /**
-     * Activates the user account
-     * @param string $code The activation code
-     */
-    public function activate(string $code) : bool
-    {
-        if (!$this->id) {
-            return false;
-        }
-
-        if ($this->activated) {
-            return true;
-        }
-
-        if ($this->activation_code != $code) {
-            return false;
-        }
-
-        $this->activated = 1;
-        $this->activation_code = '';
-
-        $this->app->plugins->run('user.activate', $this);
-
-        return $this->save();
-    }
-
-    /**
-     * Loads a user by username
-     * @param string $username The username
+     * Loads a list of users based on the provided parameters
+     * @param string $filter The filter to apply to the list of users
+     * @param string|null $order_by The field to order the list by
+     * @param string|null $order The order direction (ASC or DESC)
+     * @param int $page The page number for pagination
+     * @param int $per_page The number of users to display per page
      * @return static
      */
-    public function loadByUsername(string $username) : static
+    public function loadList(string $filter = '', string $order_by = '', string $order = '', int $page = 0, int $per_page = 30) : static
     {
-        $data = $this->db->selectRow($this->getTable(), ['username_crc32' => strtolower(crc32($username)), 'username' => $username]);
-        ;
-        if (!$data) {
-            return $this;
+        $sql = $this->db->getSql()->select($this->fields)->from($this->getTable());
+        if ($filter) {
+            $sql->where(['username' => ['operator' => 'like', 'value' => $filter]]);
+            $sql->orWhere(['email' => ['operator' => 'like', 'value' => $filter]]);
+        }
+        if ($order_by) {
+            $sql->orderBy($order_by, $order);
+        }
+        if ($page) {
+            $offset = ($page - 1) * $per_page;
+            $sql->limit($per_page, $offset);
         }
 
-        return $this->load($data, true);
+        return $this->loadBySql($sql);
     }
 
-    public function login(string $username, string $password) : bool
+    /**
+     * Loads a user by their username
+     * @param array $usernames The usernames to search for
+     * @return static
+     */
+    public function loadUsernames(array $usernames) : static
     {
-        $this->loadByUsername($username);
-        if (!$this->id) {
-            return false;
-        }
-        var_dump($this);
-        die;
-        return false;
+        $sql = $this->db->getSql()->select($this->fields)->from($this->getTable());
+        $sql->where(['username' => $usernames]);
+
+        return $this->loadBySql($sql);
     }
 }

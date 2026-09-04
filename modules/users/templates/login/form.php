@@ -11,17 +11,17 @@
 
                 <div class="form-field">
                     <label for="username">{{ login.username }}</label>
-                    <input type="text" id="username" name="username" value="{{ $model.username }}" />
+                    <input type="text" id="username" name="username" value="{{ $model.username }}" required />
                 </div>
                 <div class="form-field">
                     <label for="password">{{ login.password }}</label>
-                    <input type="password" id="password" name="password" />
+                    <input type="password" id="password" name="password" required />
                 </div>
 
                 @if ($config->users->login->remember_me->show)
                 <div class="form-field">
                     <label for="remember_me">{{ login.remember_me }}</label>
-                    <input type="checkbox" id="remember_me" name="remember_me" value="1" {{ $html->checked($config->users->login->remember_me->checked) }} />
+                    <input type="checkbox" id="remember_me" name="remember_me" value="1" {{ $html->checked($model->remember_me) }} />
                 </div>
                 @endif
 
@@ -41,7 +41,7 @@
                 {{ $plugins->run('user.login.form.fields.after') }}
                 
                 <div class="form-field">
-                    <input type="submit" value="{{ login.submit }}" />
+                    <input type="submit" data-ajax="true" value="{{ login.submit }}" />
                 </div>
             </div>
 

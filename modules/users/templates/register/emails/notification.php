@@ -1,6 +1,6 @@
 @data.subject = "New registration on $config->site->name"
 
-Greetings,
+Hello,
 
 A new user has registered on {{ $config->site->name }}. Here are the details:
 

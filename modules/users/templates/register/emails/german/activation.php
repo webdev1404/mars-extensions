@@ -1,12 +1,12 @@
-@data.subject = "Aktivieren Sie Ihr Konto auf $config.site.name"
+@data.subject = "Aktiviere dein Konto auf $config->site->name"
 
-Grüße {{ $user.username }},
+Hallo {{ $user->username }},
 
-Vielen Dank für die Registrierung auf {{ $config.site.name }}. Um Ihr Konto zu aktivieren, klicken Sie bitte auf den Link unten:
+Vielen Dank für deine Registrierung bei {{ $config->site->name }}. Um dein Konto zu aktivieren, klicke bitte auf den folgenden Link:
 
-<a href="{{ $activation_link }}">{{ $activation_link }}</a>
+<a href="{{ $activation_url }}">{{ $activation_url }}</a>
 
-Falls Sie sich nicht für ein Konto registriert haben, ignorieren Sie bitte diese E-Mail.
+Falls du dich nicht registriert hast, ignoriere diese E-Mail bitte.
 
-Mit freundlichen Grüßen,
-Das {{ $config.site.name }} Team
+Beste Grüße,
+Das {{ $config->site->name }} Team

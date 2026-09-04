@@ -1,10 +1,10 @@
-@data.subject = "Registrierungsversuch für $config.site.name erkannt"
+@data.subject = "Registrierungsversuch auf $config->site->name erkannt"
 
-Grüße {{ $user->username }},
+Hallo {{ $user->username }},
 
-Jemand (möglicherweise Sie) hat versucht, sich mit dieser E-Mail-Adresse zu registrieren. Falls Sie das nicht waren, ist keine Aktion erforderlich – Ihr Konto ist sicher.
+Jemand (wahrscheinlich Sie) hat versucht, sich mit dieser E-Mail-Adresse zu registrieren. Wenn das nicht Sie waren, ist keine Aktion erforderlich – Ihr Konto ist sicher.
 
-Falls Sie Ihr Passwort vergessen haben, verwenden Sie diesen <a href="{{ $url.route('users.forgot.password') }}">Passwort-Zurücksetzen-Link</a>.
+Wenn Sie Ihr Passwort vergessen haben, nutzen Sie diesen <a href="{{ $url->route('users.forgot.password') }}">Link zum Zurücksetzen</a>.
 
 Mit freundlichen Grüßen,
-Das {{ $config.site.name }} Team
+Das Team von {{ $config->site->name }}

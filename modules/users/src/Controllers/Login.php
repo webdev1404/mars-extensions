@@ -36,17 +36,16 @@ class Login extends Users
      */
     public function login()
     {
-        var_dump($this->app->user->is_logged);
         $this->model->bindList(['username', 'password', 'remember_me']);
 
-        /*if (!$this->canPost(
+        if (!$this->canPost(
             $this->config->users->login->captcha->show,
             $this->config->users->login->throttle->enable ? 'users.login' : null,
             $this->config->users->login->throttle->max_attempts,
             $this->config->users->login->throttle->block_duration
         )) {
             return false;
-        }*/
+        }
 
         if (!$this->model->login()) {
             $this->plugins->run('user.login.error', $this->model, $this);
@@ -58,6 +57,7 @@ class Login extends Users
         
         $this->plugins->run('user.login.success', $this->model, $this);
 
-        $this->app->message($this->__('success'));
+        // Redirect to the specified URL after successful login
+        $this->app->redirect($this->config->users->login->redirect->url);
     }
 }

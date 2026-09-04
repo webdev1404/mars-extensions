@@ -2,21 +2,37 @@
 
 return [
     'title' => "Registrazione",
-    'register' => "Registrati",
     'username' => "Nome utente",
     'email' => "Email",
     'password' => "Password",
-    'password_confirm' => "Conferma Password",
+    'password_confirm' => "Conferma password",
+    'submit' => "Registrati",
 
-    'success' => "Ti sei registrato con successo. Controlla la tua email per le istruzioni su come attivare il tuo account.",
+    'success' => "Ti sei registrato con successo. Controlla la tua email per le istruzioni di attivazione dell'account.",
 
-    'err_username' => "Per favore, inserisci il tuo nome utente",
-    'err_username_invalid' => "Il nome utente inserito non è valido. Deve essere lungo tra 5 e 100 caratteri e può contenere solo lettere, numeri, underscore e punti.",
-    'err_username_exists' => "Il nome utente inserito è già in uso. Scegline un altro.",
-    'err_email' => "Per favore, inserisci la tua email",
-    'err_email_invalid' => "L'email inserita non è valida",
-    'err_email_exists' => "L'email inserita è già registrata. Usa un'altra email.",
-    'err_password' => "Per favore, inserisci la tua password",
-    'err_password_invalid' => "La password inserita non è valida. Deve essere lunga tra 6 e 100 caratteri e includere una combinazione di lettere, numeri e caratteri speciali.",
-    'err_password_mismatch' => "Le password inserite non corrispondono",
+    'agreement.title' => "Accordo di registrazione",
+    'agreement.link' => "Ho letto e accetto i termini e le condizioni di registrazione.",
+
+    'registration_closed.title' => "Registrazione chiusa",
+
+    'resend_activation.link' => "Invia nuovamente il codice di attivazione",
+    'resend_activation.title' => "Invia nuovamente il codice di attivazione",
+    'resend_activation.submit' => "Invia nuovamente il codice di attivazione",
+    'resend_activation.success' => "Se esiste un account con l'email fornita e non è attivato, è stata inviata una nuova email di attivazione. Controlla la tua casella di posta.",
+
+    'activation.success' => "Il tuo account è stato attivato correttamente. Ora puoi <a href=\"{$app->url->route('users.login')}\">accedere</a>.",
+    'activation.failed' => "L'attivazione dell'account non è riuscita. Chiave di attivazione non valida o scaduta. Richiedi una nuova email di attivazione dalla <a href=\"{$app->url->route('users.register.resend_activation')}\">pagina di reinvio</a>.",
+
+    'err.username' => "Inserisci il nome utente",
+    'err.username.invalid' => "Il nome utente non è valido. Deve avere una lunghezza compresa tra 5 e 100 caratteri e può contenere solo lettere, numeri, underscores e punti.",
+    'err.username.exists' => "Il nome utente è già stato utilizzato. Scegline un altro.",
+    'err.email' => "Inserisci l'email",
+    'err.email.invalid' => "L'email non è valida",
+    'err.email.exists' => "L'email è già registrata. Utilizza un'altra email.",
+    'err.password' => "Inserisci la password",
+    'err.password.invalid' => "La password non è valida. Deve avere una lunghezza compresa tra 6 e 100 caratteri e includere una combinazione di lettere, numeri e caratteri speciali.",
+    'err.password.mismatch' => "Le password non coincidono",
+    'err.agreement' => "Devi accettare i termini e le condizioni di registrazione per procedere",
+
+    'err.activation.params' => "Parametri di attivazione non validi",
 ];

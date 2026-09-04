@@ -37,7 +37,8 @@ class Setup extends Module
             `token` VARCHAR(255) NOT NULL,
             `expires_at` INT UNSIGNED NOT NULL,
             PRIMARY KEY (`id`),
-            INDEX user_idx (`user_id`)
+            INDEX user_idx (`user_id`),
+            INDEX expires_idx (`expires_at`)
         )");
 
 
@@ -50,11 +51,13 @@ class Setup extends Module
             `selector_crc32` INT UNSIGNED NOT NULL,
             `token` VARCHAR(255) NOT NULL,
             `created_at` INT UNSIGNED NOT NULL,
+            `updated_at` INT UNSIGNED NOT NULL,
             `expires_at` INT UNSIGNED NOT NULL,
             `ip` VARBINARY(16) NOT NULL,
             `user_agent` TEXT NOT NULL,
             PRIMARY KEY (`id`),
             INDEX selector_idx (`selector_crc32`),
+            INDEX user_idx (`user_id`, `expires_at`),
             INDEX expires_idx (`expires_at`)
         )");
 
@@ -66,9 +69,22 @@ class Setup extends Module
             `token` VARCHAR(255) NOT NULL,
             `expires_at` INT UNSIGNED NOT NULL,
             PRIMARY KEY (`id`),
-            INDEX user_idx (`user_id`)
+            INDEX user_idx (`user_id`),
+            INDEX expires_idx (`expires_at`)
         )");
 
+        $this->app->db->query("
+        CREATE TABLE IF NOT EXISTS `users_email_update_tokens`
+        (
+            `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+            `user_id` INT UNSIGNED NOT NULL,
+            `new_email` VARCHAR(255) NOT NULL,
+            `token` VARCHAR(255) NOT NULL,
+            `expires_at` INT UNSIGNED NOT NULL,
+            PRIMARY KEY (`id`),
+            INDEX user_idx (`user_id`),
+            INDEX expires_idx (`expires_at`)
+        )");
 
     }
 

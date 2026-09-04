@@ -4,6 +4,6 @@
 <div class="registration-closed-message">
     <h1>Registrierung geschlossen</h1>
     <p>
-        Wir akzeptieren derzeit keine neuen Registrierungen. Bitte überprüfen Sie später auf Updates.
+        Wir nehmen derzeit keine neuen Registrierungen an. Bitte schauen Sie später erneut vorbei, um Updates zu erhalten.
     </p>
 </div>

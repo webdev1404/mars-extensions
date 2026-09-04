@@ -8,7 +8,7 @@ return [
     'remember_me.show' => true,
 
     // Whether the "remember me" checkbox is checked by default
-    'remember_me.checked' => true,
+    'remember_me.checked' => false,
 
     // The default value for the "remember me" if remember_me.show is false
     'remember_me.default' => true,

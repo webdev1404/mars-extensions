@@ -195,7 +195,7 @@ class Register extends Users
         }
 
         if (!$this->validate(['email' => 'req|email'], ['email' => ['req' => 'register.err.email', 'email' => 'register.err.email.invalid']])) {
-             $this->app->errors->set($this->errors);
+            $this->app->errors->set($this->errors);
 
             return false;
         }

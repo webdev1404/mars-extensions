@@ -14,7 +14,7 @@
                     <input type="email" id="email" name="email" value="" />
                 </div>
 
-                @if ($captcha->enabled && $config->users->registration->show_captcha)
+                @if ($captcha->enabled && $config->users->registration->captcha->show)
                 <div class="form-field">
                     <label for="captcha"></label>
                     {! $app->captcha->render() !}

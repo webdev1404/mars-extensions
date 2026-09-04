@@ -171,8 +171,15 @@ label {
     vertical-align: middle;
 }
 
+label.required::after {
+    content: "*";
+    color: red;
+    margin-left: 4px;
+}
+
 input[type="text"],
 input[type="email"],
+input[type="tel"],
 input[type="password"],
 textarea {
     padding: 10px 12px;
@@ -182,6 +189,12 @@ textarea {
     background: #f5f7fa;
     resize: vertical;
     flex: 1;
+}
+
+input:read-only,
+textarea:read-only {
+    background: #e0e0e0;
+    color: #7f8c8d;
 }
 
 textarea {

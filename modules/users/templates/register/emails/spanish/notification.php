@@ -1,11 +1,11 @@
-@data.subject = "Nuevo registro en $config.site.name"
+@data.subject = "Nuevo registro en $config->site->name"
 
-Saludos,
+Hola,
 
-Un nuevo usuario se ha registrado en {{ $config.site.name }}. Aquí están los detalles:
+Un nuevo usuario se ha registrado en {{ $config->site->name }}. Aquí están los detalles:
 
-Nombre de usuario: {{ $user.username }}&nbsp;
-Correo electrónico: {{ $user.email }}&nbsp;
+Nombre de usuario: {{ $user->username }}&nbsp;
+Correo electrónico: {{ $user->email }}&nbsp;
 
 Saludos cordiales,
-El equipo de {{ $config.site.name }}
+El equipo de {{ $config->site->name }}

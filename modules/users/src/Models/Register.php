@@ -67,7 +67,7 @@ class Register extends Entity
      */
     public function register() : bool
     {
-        if (!$this->config->users->registration->show_agreement) {
+        if (!$this->config->users->registration->agreement->show) {
             $this->setValidationRulesToSkip('agreement');
         }
 

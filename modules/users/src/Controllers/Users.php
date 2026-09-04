@@ -8,12 +8,12 @@ use Modules\Users\User;
 abstract class Users extends Controller
 {
     /**
-     * 
+     * Checks if the user is logged in and redirects to the specified URL if they are
      */
     protected function before()
     {
         if ($this->app->user->is_logged) {
-            //$this->app->response->redirect($this->app->router->getUrl('home'));
+            $this->app->redirect($this->url->get('users.account'));
         }
     }
 

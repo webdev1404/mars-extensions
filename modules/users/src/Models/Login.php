@@ -1,7 +1,6 @@
 <?php
 namespace Modules\Users\Models;
 
-use Mars\App;
 use Mars\Mvc\Models\Entity;
 
 class Login extends Entity
@@ -35,7 +34,17 @@ class Login extends Entity
     /**
      * @internal
      */
-    public bool $remember_me = false;
+    public bool $remember_me {
+        get {
+            if (isset($this->remember_me)) {
+                return $this->remember_me;
+            }
+
+            $this->remember_me = $this->app->config->users->login->remember_me->checked;
+
+            return $this->remember_me;
+        }
+    }
 
     /**
      * Handles the login process
@@ -43,12 +52,13 @@ class Login extends Entity
      */
     public function login() : bool
     {
-        var_dump($this->username, $this->password, $this->remember_me);
         if (!$this->validate()) {
             return false;
         }
 
-        if (!$this->app->user->login($this->username, $this->password)) {
+        $remember_me = $this->app->config->users->login->remember_me->show ? $this->remember_me : $this->app->config->users->login->remember_me->default;
+
+        if (!$this->app->user->login($this->username, $this->password, $remember_me)) {
             $this->errors->add($this->__('login.err.invalid'));
 
             return false;
