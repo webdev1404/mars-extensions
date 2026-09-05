@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Users\Setup;
+namespace Modules\Users;
 
 use Mars\Extensions\Setup\Module;
 
